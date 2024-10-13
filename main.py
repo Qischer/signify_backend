@@ -129,6 +129,8 @@ async def get_translation():
 
     print(arr)
     msg = getCompleteSentece(arr)
+
+    word_buffer = []
     return {"msg":msg}
 
 @app.get("/clearBuffer")
