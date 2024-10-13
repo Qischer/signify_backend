@@ -3,8 +3,6 @@ from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from utils import getCompleteSentece
 
-from model.model_util import clean_array
-
 import pickle
 import base64
 
@@ -38,6 +36,22 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+def clean_array(arr):
+    result = []
+    i = 0
+
+    while i < len(arr):
+        count = 1
+        while i + 1 < len(arr) and arr[i] == arr[i + 1]:
+            count += 1
+            i += 1
+
+        if count > 5:
+            result.append(arr[i])
+        i += 1  # Move to the next distinct element
+
+    return result
 
 def getAuxNp(img):
     data_aux = []
