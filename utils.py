@@ -9,7 +9,7 @@ def getCompleteSentece(arr):
     stream = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
-            {"role": "system", "content": "You are a helpful ASL interpreter. You are given a list of words translated from sign language and you should produce a complete sentence."},
+            {"role": "system", "content": "You are a helpful ASL translator. You will be given a list of words that have been detected using an ASL detector. The words do not follow correct grammar. Use them to produce a complete sentence that makes sense. Only include the sentence and not any explanations."},
             {
                 "role": "user",
                 "content": input,

@@ -123,6 +123,8 @@ async def post_frame(data: ImageData):
 async def get_translation():
     print("request the translation")
     arr = clean_array(word_buffer)
+
+    print(arr)
     msg = getCompleteSentece(arr)
     return {"msg":msg}
 
