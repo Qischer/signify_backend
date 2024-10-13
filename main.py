@@ -26,6 +26,8 @@ model_dict = pickle.load(open('model/model.p', 'rb'))
 model = model_dict['model']
 
 word_buffer = []
+labels_dict = {'hello': 'hello', 'thank you': 'thank you', 'fine': 'fine',
+               'good': 'good', 'you': 'you?', 'my name is': 'my name is', 'A': 'A', 'L': 'L', 'I': 'I'}
 
 app = FastAPI()
 
@@ -110,12 +112,13 @@ async def post_frame(data: ImageData):
         return {"msg": "ERROR! can't create cv2 img"}
     
     data_aux = getAuxNp(image)
-    
-    if len(data_aux) > 0:
+
+    if len(data_aux) == 42:
         prediction = model.predict([np.asarray(data_aux)])
-        # predicted_character = labels_dict[prediction[0]]
-        print(f"Predicted character: {prediction[0]}")
-        word_buffer.append(prediction[0])
+        predicted_character = labels_dict.get(prediction[0], 'unknown')
+        word_buffer.append(predicted_character)
+    else:
+        print(f"Unexpected number of features: {len(data_aux)}")
 
     return {"msg": "we got em"}
 
